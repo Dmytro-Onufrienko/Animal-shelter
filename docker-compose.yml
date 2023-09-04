@@ -1,0 +1,42 @@
+version: '3'
+services:
+  dgraph:
+    image: dgraph/dgraph:latest # Оновіть тег на "latest" або на актуальний
+    container_name: dgraph
+    ports:
+      - "8000:8000"
+      - "8080:8080"
+      - "9080:9080"
+    volumes:
+      - ./data:/dgraph
+    command:
+      - "dgraph"
+      - "zero"
+      - "--my=zero:5080"
+      - "--replicas=3"
+    networks:
+      - dgraphnet
+    depends_on:
+      - zero1
+      - zero2
+      - zero3
+  zero1:
+    image: dgraph/dgraph:latest # Оновіть тег на "latest" або на актуальний
+    container_name: dgraph-zero1
+    command: "dgraph zero --my=zero1:5080"
+    networks:
+      - dgraphnet
+  zero2:
+    image: dgraph/dgraph:latest # Оновіть тег на "latest" або на актуальний
+    container_name: dgraph-zero2
+    command: "dgraph zero --my=zero2:5080"
+    networks:
+      - dgraphnet
+  zero3:
+    image: dgraph/dgraph:latest # Оновіть тег на "latest" або на актуальний
+    container_name: dgraph-zero3
+    command: "dgraph zero --my=zero3:5080"
+    networks:
+      - dgraphnet
+networks:
+  dgraphnet:

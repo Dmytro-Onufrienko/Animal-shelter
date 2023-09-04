@@ -1,0 +1,48 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type OwnerEntity {
+  id: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  pets: [PetEntity!]
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type PetEntity {
+  id: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  ownerId: Int!
+  owner: OwnerEntity!
+  type: String
+}
+
+type Query {
+  pets: [PetEntity!]!
+  getPet(id: Int!): PetEntity!
+  owners: [OwnerEntity!]!
+  getOwner(id: Int!): OwnerEntity!
+}
+
+type Mutation {
+  createPet(petData: CreatePetDto!): PetEntity!
+  createOwner(ownerData: CreateOwnerDto!): OwnerEntity!
+}
+
+input CreatePetDto {
+  name: String!
+  ownerId: Int!
+  type: String
+}
+
+input CreateOwnerDto {
+  name: String!
+}
